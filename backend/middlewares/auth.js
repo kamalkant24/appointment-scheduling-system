@@ -40,31 +40,44 @@
 // }
 
 const jwt = require('jsonwebtoken');
-const { UnauthenticatedError } = require('../errors/index');
+const { UnauthenticatedError } = require('../errors');
+const { StatusCodes } = require('http-status-codes');
 
 const auth = async (req, res, next) => {
+  // Extract the Authorization header (Bearer token)
   const authHeader = req.headers.authorization;
 
+  // If no Authorization header or not in "Bearer token" format, return an error
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({
-      msg: 'Authentication token is missing or malformed',
+    return res.status(StatusCodes.UNAUTHORIZED).json({
+      message: 'Authentication token is missing or malformed',
       isValid: false,
     });
   }
 
+  // Extract the token from the header
   const token = authHeader.split(' ')[1];
 
   try {
+    // Decode and verify the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;  // Store the user info in request object for further use
+
+    // Store the decoded user ID (mongoID) and other data in req object for further use
+    req.user = decoded;
+
+    // Pass control to the next middleware or route handler
     next();
   } catch (error) {
-    return res.status(401).json({
-      msg: 'Invalid or expired token',
+    // If the token is invalid or expired
+    return res.status(StatusCodes.UNAUTHORIZED).json({
+      message: 'Invalid or expired token',
       isValid: false,
     });
   }
 };
+
+
+
 
 module.exports = auth;
 

@@ -4,21 +4,53 @@ const Models = require('../models/index')
 const Errors = require('../errors/index')
 
 
-const create = async (req, res) => {
+// const create = async (req, res) => {
 
-    req.body["date"] = req.body["slot"].split(' ')[0]
-    req.body["time"] = req.body["slot"].split(' ')[1]
+//     req.body["date"] = req.body["slot"].split(' ')[0]
+//     req.body["time"] = req.body["slot"].split(' ')[1]
 
-    console.log(req.body)
+//     console.log(req.body)
 
-    const appointment = await Models.Appointment.create({ ...req.body })
+//     const appointment = await Models.Appointment.create({ ...req.body })
     
-    return res.status(StatusCodes.CREATED).json({
+//     return res.status(StatusCodes.CREATED).json({
 
-        appointment,
-        isValid: true,
-    })
-}
+//         appointment,
+//         isValid: true,
+//     })
+// }
+const create = async (req, res) => {
+    try {
+        // Extract the date and time from the slot
+        req.body["date"] = req.body["slot"].split(' ')[0];
+        req.body["time"] = req.body["slot"].split(' ')[1];
+
+        console.log(req.body);
+
+        // Find the count of existing appointments for the given date and doctor
+        const appointmentCount = await Models.Appointment.countDocuments({
+            date: req.body["date"],
+            doctor: req.body["doctor"],
+        });
+
+        // Set the token number as one more than the current count
+        req.body["tokenNo"] = (appointmentCount + 1).toString();
+
+        // Create the appointment
+        const appointment = await Models.Appointment.create({ ...req.body });
+
+        return res.status(StatusCodes.CREATED).json({
+            appointment,
+            isValid: true,
+        });
+    } catch (error) {
+        console.error("Error creating appointment:", error);
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            message: "Something went wrong",
+            error: error.message,
+        });
+    }
+};
 
 const list = async (req, res) => {
 
