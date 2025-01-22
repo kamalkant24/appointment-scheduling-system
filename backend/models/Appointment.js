@@ -47,5 +47,31 @@ const AppointmentSchema = new mongoose.Schema({
   { timestamps: true }
 );
 
+// Pre-save hook to ensure sequential tokenNo generation
+AppointmentSchema.pre('save', async function (next) {
+  const appointment = this;
 
+  // Only generate tokenNo if it hasn't already been set
+  if (appointment.isNew || appointment.tokenNo === '-1') {
+    try {
+      // Fetch the latest token number for the doctor and date
+      const lastAppointment = await mongoose
+        .model('Appointment')
+        .findOne({ date: appointment.date, doctor: appointment.doctor })
+        .sort({ tokenNo: -1 }) // Sort in descending order by tokenNo to get the highest token
+        .exec();
+
+      const lastToken = lastAppointment ? parseInt(lastAppointment.tokenNo, 10) : 0;
+
+      // Assign the next token number
+      appointment.tokenNo = (lastToken + 1).toString();
+
+      next();
+    } catch (err) {
+      next(err); // Pass the error to Mongoose if something goes wrong
+    }
+  } else {
+    next();
+  }
+});
 module.exports = mongoose.model('Appointment', AppointmentSchema)
