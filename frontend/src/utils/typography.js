@@ -1,5 +1,5 @@
 const themeTypography = {
-    fontFamily: "SF, sans-serif",
+    fontFamily: "'Poppins', sans-serif",
     htmlFontSize: 16,
     fontSize: 16,
     fontWeight: 400,

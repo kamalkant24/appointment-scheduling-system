@@ -12,17 +12,19 @@ import { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
 import LaunchButton from "./LaunchButton";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Menu from "@mui/material/Menu";
 import Box from "@mui/material/Box";
 import Logo from "../assets/logo/png/logo.png";
 import Loading from "./Loading";
 import axios from "axios";
+import {setData} from "../state/dataSlice";
 
 import "./navbar.css"
+import { capitalize } from "@mui/material";
 
 const settings = ["Profile", "Home", "Logout"];
-const pages = ["Home", "About"];
+const pages = ["Home", "About", "Login", "Register"];
 
 const navigations = {
   Home: { path: "/" },
@@ -41,7 +43,8 @@ function Navbar() {
   const [isLoading, setIsLoading] = useState(true);
 
   const [tokenOwner, setTokenOwner] = useState("");
-
+  const userFormData = useSelector(state => state.data.data);
+  const [urlText, setUrlText] = useState('');
   useEffect(() => {
     let dataToSend;
 
@@ -90,6 +93,12 @@ function Navbar() {
       setIsLoading(false);
     }
   }, [navigate, dispatch, tokenOwner]);
+
+  useEffect(() => {
+    if(userFormData){
+      setUrlText(userFormData);
+    }
+  }, [userFormData, navigate])
 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -141,6 +150,9 @@ function Navbar() {
       
     }
   };
+  const redirectTo = (e)=> {
+    dispatch(setData(e.target.innerText))
+  }
 
   return (
     <>
@@ -148,9 +160,14 @@ function Navbar() {
         <Loading />
       ) : (
         <>
-          <AppBar position="static" 
+          <AppBar position="fixed" 
             sx={{ 
-              background: "linear-gradient(90deg, #471e75 10% , #893be3)"
+              // background: "linear-gradient(90deg, #471e75 10% , #893be3)"
+              backgroundColor: "transparent",
+              boxShadow: "none",
+              left:"0",
+              right:"0",
+              top: "0"
             }}>
             <Container maxWidth="xl">
               <Toolbar disableGutters>
@@ -163,10 +180,9 @@ function Navbar() {
                   sx={{
                     mr: 2,
                     display: { xs: "none", md: "flex" },
-                    fontFamily: "monospace",
                     fontWeight: 700,
                     letterSpacing: ".3rem",
-                    color: "inherit",
+                    color: "#000",
                     textDecoration: "none",
                   }}
                 >
@@ -184,7 +200,7 @@ function Navbar() {
                     aria-controls="menu-appbar"
                     aria-haspopup="true"
                     onClick={handleOpenNavMenu}
-                    color="inherit"
+                    color="#000"
                   >
                     <MenuIcon />
                   </IconButton>
@@ -227,7 +243,7 @@ function Navbar() {
                           <Typography
                             textAlign="center"
                             onClick={handleSettingClick}
-                            sx={{ color: "white", fontWeight: 500 }}
+                            sx={{ color: "#000", fontWeight: 500 }}
                           >
                             {page}
                           </Typography>
@@ -246,7 +262,6 @@ function Navbar() {
                     mr: 2,
                     display: { xs: "flex", md: "none" },
                     flexGrow: 1,
-                    fontFamily: "monospace",
                     fontWeight: 700,
                     letterSpacing: ".3rem",
                     color: "inherit",
@@ -259,12 +274,17 @@ function Navbar() {
                     style={{ height: "35px", width: "126px" }}
                   />
                 </Typography>
-                <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+                <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifyContent: "flex-end" }}>
                   {pages.map((page) => (
                     <Button
                       key={page}
-                      onClick={handleCloseNavMenu}
-                      sx={{ my: 2, color: "white", display: "block" }}
+                      onClick={redirectTo}
+                      sx={{ py: 0, color: urlText=== 'Home' ? '#386bc0' : "#fff", display: "block" , textTransform: "capitalize", fontWeight: "500",
+                        "&:hover": {
+                          backgroundColor: "transparent",
+                          // color: "#893be3"
+                        },
+                      }}
                     >
                       {page}
                     </Button>
@@ -291,7 +311,8 @@ function Navbar() {
                           </Typography>
                         </Box>
                       ) : (
-                        <LaunchButton value={"Sign Up"} />
+                        // <LaunchButton value={"Sign Up"} /> 
+                       null
                       )}
                       {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
                     </Box>

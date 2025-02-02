@@ -95,28 +95,31 @@ export default function DoctorLogin() {
 
   return (
     <form className="login-form" onSubmit={handleLogin}>
+       <label htmlFor="email" className="custom-label mt-2">Email</label>
       <MDBInput
-        label="Email"
+        // label="Email"
         type="email"
         name="email"
         value={loginData.email}
         onChange={handleChange}
-        className="mt-4"
+        className=""
         onFocusCapture={(event) => {unsetErrors(event)}}
       />
       {errors.email.state ? (errors.email.errMsg !== '' ? <div className="error-message" >{errors.email.errMsg}</div> : <div className="error-message" >Please provide a valid email</div> )  : null}
+      <label htmlFor="password" className="custom-label mt-3">Password</label>
       <MDBInput
-        label="Password"
+        // label="Password"
         type="password"
         name="password"
         value={loginData.password}
         onChange={handleChange}
-        className="mt-4"
+        className=""
         onFocusCapture={(event) => {unsetErrors(event)}}
       />
       {errors.password.state ? (errors.password.errMsg !== '' ? <div className="error-message" >{errors.password.errMsg}</div> : <div className="error-message" >Please provide the password</div> )  : null}
-      <MDBBtn type="submit" className="mt-4" block >
-      {isLoading ? (
+      <MDBBtn type="submit" className="mt-4 btn-lg" block >
+        Login
+      {/* {isLoading ? (
             <Vortex
               visible={true}
               height="30"
@@ -135,7 +138,7 @@ export default function DoctorLogin() {
             />
           ) : (
             "Sign in as Doctor"
-          )}
+          )} */}
       </MDBBtn>
     </form>
   );

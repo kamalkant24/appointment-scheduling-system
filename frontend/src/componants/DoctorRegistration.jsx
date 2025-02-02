@@ -3,9 +3,11 @@ import { MDBInput, MDBBtn } from "mdb-react-ui-kit";
 import axios from "axios";
 import { Vortex } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
+import axiosAsistance from "../utils/axiosAsistance";
 // import { useNavigate } from "react-router-dom";
 
 const DoctorRegistration = () => {
+  console.log(process.env.REACT_APP_BASE_URL, 'api----');
   // const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -128,7 +130,7 @@ const DoctorRegistration = () => {
 
           // console.log(dataToSend)
 
-          await axios.post("/register/organizer", dataToSend)
+          await axiosAsistance.post("/register/organizer", dataToSend)
             .then((response) => {
               console.log("Registered successfully")
               setIsLoading(false);
@@ -179,103 +181,120 @@ const DoctorRegistration = () => {
   }
 
   return (
-    <div className="form-div">
-      <h1>Doctor Registration</h1>
+    <div className="form">
+      {/* <h1>Doctor Registration</h1> */}
     <form onSubmit={handleSubmit} className="registration-form">
+    <label htmlFor="name" className="custom-label mt-4">Name</label>
       <MDBInput
-        label="Name"
+        // label="Name"
         type="text"
         name="name"
         value={formData.name}
         onChange={handleChange}
-        className="mt-4" 
+        className="" 
         onFocusCapture={(event) => {unsetErrors(event)}}
       />
       {errors.name.state ? (
           <div className="error-message" >Please provide Name</div>
         ) : null}
+
+      <label htmlFor="phoneNumber" className="custom-label mt-3">Phone Number</label>
       <MDBInput
-        label="Phone Number"
+        // label="Phone Number"
         type="text"
         name="phoneNumber"
         value={formData.phoneNumber}
         onChange={handleChange}
-        className="mt-4" 
+        className="" 
         onFocusCapture={(event) => {unsetErrors(event)}}
       />
       {errors.phoneNumber.state ? (
           <div className="error-message" >Please provide phone number</div>
         ) : null}
+
+      <label htmlFor="email" className="custom-label mt-3">Email</label>
       <MDBInput
-        label="Email"
+        // label="Email"
         type="email"
         name="email"
         value={formData.email}
         onChange={handleChange}
-        className="mt-4" 
+        className="" 
         onFocusCapture={(event) => {unsetErrors(event)}}
       />
       {errors.email.state ? (
           <div className="error-message" >Please provide organization Email ID</div>
         ) : null}
+         
+         
+        <label htmlFor="password" className="custom-label mt-3">Password</label>
         <MDBInput
-        label="Password"
+        // label="Password"
         type="password"
         name="password"
         value={formData.password}
         onChange={handleChange}
-        className="mt-4" 
+        className="0" 
         onFocusCapture={(event) => {unsetErrors(event)}}
       />
       {errors.password.state ? (
           <div className="error-message" >Please provide a valid password(Atleat 6 character including[numbers, lower and upper case letters and special characters])</div>
         ) : null}
+
+      <label htmlFor="confirmPassword" className="custom-label mt-3">Confirm Password</label>
       <MDBInput
-        label="Confirm Password"
+        // label="Confirm Password"
         type="password"
         name="confirmPassword"
         value={formData.confirmPassword}
         onChange={handleChange}
-        className="mt-4" 
+        className="" 
         onFocusCapture={(event) => {unsetErrors(event)}}
       />
       {errors.confirmPassword.state ? (
           <div className="error-message" >Please confirm your password</div>
         ) : null}
+         
+      <label htmlFor="age" className="custom-label mt-3">Age</label>
       <MDBInput
-        label="Age"
+        // label="Age"
         type="number"
         name="age"
         value={formData.age}
         onChange={handleChange}
-        className="mt-4" 
+        className="" 
         onFocusCapture={(event) => {unsetErrors(event)}}
       />
+
+      <label htmlFor="Speciality" className="custom-label mt-3">Speciality</label>
       <MDBInput
-        label="Speciality"
+        // label="Speciality"
         type="text"
         name="speciality"
         value={formData.speciality}
         onChange={handleChange}
-        className="mt-4" 
+        className="" 
         onFocusCapture={(event) => {unsetErrors(event)}}
       />
       {errors.speciality.state ? (
           <div className="error-message" >Please provide your speciality</div>
         ) : null}
+      
+      <label htmlFor="venue" className="custom-label mt-3">Seating</label>
       <MDBInput
-        label="Seating"
+        // label="Seating"
         type="text"
         name="venue"
         value={formData.venue}
         onChange={handleChange}
-        className="mt-4" 
+        className="" 
         onFocusCapture={(event) => {unsetErrors(event)}}
       />
       {errors.venue.state ? <div className="error-message" >Please provide your seating</div> : null}
       
-      <MDBBtn type="submit" className="mt-4" block>
-      {isLoading ? (
+      <MDBBtn type="submit" className="mt-4 btn-lg text-capitalize" block>
+        Register
+      {/* {isLoading ? (
             <Vortex
               visible={true}
               height="30"
@@ -294,7 +313,7 @@ const DoctorRegistration = () => {
             />
           ) : (
             "Sign Up as Organizer"
-          )}
+          )} */}
       </MDBBtn>
     </form>
     </div>

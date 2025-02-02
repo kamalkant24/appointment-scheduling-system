@@ -4,15 +4,44 @@
     justify-content: center;
     align-items: center;
 } */
-.form-div{
+/* .form-div{
     height: 100vh;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+} */
+footer{
+    display: none;
 }
-
-.registration-form{
-    width: 50%;
+.doctor-img{
+    object-fit: contain;
+    width: 100%;
+}
+.login-title{
+    color: #121212;
+}
+.doctor-bg{
+  background: linear-gradient(90deg, #15376e 10%, #386bc0);
+}
+/* .doctor-bg::after{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('../assets/logo/png/doctor-img-shape.png') no-repeat;
+    background-size: cover;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+} */
+.form-allFormsContainer .nav.nav-pills .nav-link{
+    background-color: transparent;
+    border-bottom: 2px solid transparent;
+}
+.nav.nav-pills .nav-link.active{
+    border-bottom: 2px solid #386bc0;
+    border-radius: 0;
 }

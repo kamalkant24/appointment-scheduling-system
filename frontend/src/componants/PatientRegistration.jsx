@@ -187,33 +187,35 @@ export default function PatientRegistration() {
   return (
     <form onSubmit={handleRegister} className="registration-form">
       {/* Participant registration form fields */}
+      <label htmlFor="name" className="custom-label mt-4">Name</label>
       <MDBInput
-        label="Name"
         type="text"
         name="name"
         value={formData.name}
         onChange={handleChange}
-        className="mt-4"
+        className=""
         onFocusCapture={(event) => {unsetErrors(event)}}
       />
       {errors.name.state ? <div className="error-message" >Please provide Name</div> : null}
+
+      <label htmlFor="phoneNumber" className="custom-label mt-3">phone Number</label>
       <MDBInput
-        label="Phone Number"
         type="text"
         name="phoneNumber"
         value={formData.phoneNumber}
         onChange={handleChange}
-        className="mt-4"
+        className=""
         onFocusCapture={(event) => {unsetErrors(event)}}
       />
         {errors.phoneNumber.state ? <div className="error-message" >Please provide Phone Number</div> : null}
+      
+      <label htmlFor="email" className="custom-label mt-3">Email</label>
       <MDBInput
-        label="Email"
         type="email"
         name="email"
         value={formData.email}
         onChange={handleChange}
-        className="mt-4"
+        className=""
         onFocusCapture={(event) => {unsetErrors(event)}}
       />
       {errors.email.state ? (
@@ -223,58 +225,62 @@ export default function PatientRegistration() {
           <div className="error-message" >Please provide a valid email</div>
         )
       ) : null}
+
+      <label htmlFor="password" className="custom-label mt-3">Password</label>
       <MDBInput
-      label="Password"
       type="password"
       name="password"
       value={formData.password}
       onChange={handleChange}
-      className="mt-4"
+      className=""
       onFocusCapture={(event) => {unsetErrors(event)}}
       />
       {errors.password.state ? <div className="error-message" >Please provide a valid password(Atleat 6 character including[numbers, lower and upper case letters and special characters])</div> : null}
       
+      <label htmlFor="confirmPassword" className="custom-label mt-3">Confirm Password</label>
       <MDBInput
-        label="Confirm Password"
         type="password"
         name="confirmPassword"
         value={formData.confirmPassword}
         onChange={handleChange}
-        className="mt-4"
+        className=""
         onFocusCapture={(event) => {unsetErrors(event)}}
       />
       {errors.confirmPassword.state ? (
           <div className="error-message" >Please confirm your password</div>
         ) : null}
+
+      <label htmlFor="age" className="custom-label mt-3">Age</label>
       <MDBInput
-        label="Age"
         type="number"
         name="age"
         value={formData.age}
         onChange={handleChange}
-        className="mt-4"
+        className=""
         onFocusCapture={(event) => {unsetErrors(event)}}
       />
       {errors.age.state ? <div className="error-message" >Please provide Age</div> : null}
+
+      <label htmlFor="weight" className="custom-label mt-3">Weight</label>
       <MDBInput
-        label="Weight"
         type="number"
         name="weight"
         value={formData.weight}
         onChange={handleChange}
-        className="mt-4"
+        className=""
         onFocusCapture={(event) => {unsetErrors(event)}}
       />
       {/* {errors.weight.state ? (
         <div className="error-message" >Please provide your weight</div>
       ) : null} */}
+
+      <label htmlFor="height" className="custom-label mt-3">Height</label>
       <MDBInput
-        label="Height"
         type="number"
         name="height"
         value={formData.height}
         onChange={handleChange}
-        className="mt-4"
+        className=""
         onFocusCapture={(event) => {unsetErrors(event)}}
       />
       {/* {errors.height.state ? (
@@ -287,14 +293,15 @@ export default function PatientRegistration() {
         name="gender"
         value={formData.gender}
         onChange={handleChange}
-        className="mt-4"
+        className=""
       /> */}
 
+      <label htmlFor="gender" className="custom-label mt-3">Gender</label>
       <select
         name="gender"
         onChange={handleChange}
         value={formData.gender}
-        className="mt-4 form-gender"
+        className=" form-gender"
         onFocusCapture={(event) => {unsetErrors(event)}}
         required
       >
@@ -309,16 +316,16 @@ export default function PatientRegistration() {
       </select>
       {errors.gender.state ? <div className="error-message" >Please select your gender</div> : null}
       <div>
-        <label >Disability:</label>
+      <label htmlFor="name" className="custom-label mt-3 me-3">Disability</label>
       <span className="form-check form-check-inline">
-  <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" />
-  <label className="form-check-label" htmlFor="inlineRadio1">Yes</label>
-</span>
+        <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" />
+        <label className="form-check-label" htmlFor="inlineRadio1">Yes</label>
+      </span>
 
-<span className="form-check form-check-inline">
-  <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" defaultChecked/>
-  <label className="form-check-label" htmlFor="inlineRadio2">No</label>
-</span>
+      <span className="form-check form-check-inline">
+        <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" defaultChecked/>
+        <label className="form-check-label" htmlFor="inlineRadio2">No</label>
+      </span>
 </div>
 
       {/* <MDBInput
@@ -327,7 +334,7 @@ export default function PatientRegistration() {
         name="birthDate"
         value={formData.birthDate}
         onChange={handleChange}
-        className="mt-4"
+        className=""
         onFocusCapture={(event) => {unsetErrors(event)}}
       />
       {errors.birthDate.state ? (
@@ -339,15 +346,16 @@ export default function PatientRegistration() {
         name="completionYear"
         value={formData.completionYear}
         onChange={handleChange}
-        className="mt-4"
+        className=""
         onFocusCapture={(event) => {unsetErrors(event)}}
       />
       {errors.completionYear.state ? (
           <div className="error-message" >Please provide your college completion year</div>
         ) : null} */}
       
-      <MDBBtn type="submit" className="mt-4" block>
-      {isLoading ? (
+      <MDBBtn type="submit" className="mt-4 btn-lg text-capitalize" block>
+        Register
+      {/* {isLoading ? (
             <Vortex
               visible={true}
               height="30"
@@ -366,7 +374,7 @@ export default function PatientRegistration() {
             />
           ) : (
             "Sign Up as Participant"
-          )}
+          )} */}
       </MDBBtn>
     </form>
   );
